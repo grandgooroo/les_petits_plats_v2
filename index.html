@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Les Petits Plats - Page de recherche</title>
+    <link rel="stylesheet" href="./css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@200&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Lato:wght@100;300;400;700;900&family=DM+Sans:wght@400;500;700&display=swap"
+        rel="stylesheet">
+
+        <script src="https://kit.fontawesome.com/904e9ee361.js" crossorigin="anonymous"></script>
+        <link rel="icon" type="image/png" href="assets/logos/icon-logo.png">
+</head>
+<body>
+    <div class="main-container">
+        <header class="header" tabindex="0">
+            <h2 class="header__titre">Les Petits Plats</h2>
+                <img class="logo" src="assets/logos/logos.png" alt="logo">
+            <h1 class="header__slogan">CHERCHEZ PARMI PLUS DE 1500 RECETTES DU QUOTIDIEN,SIMPLES ET DÉLICIEUSES</h1>
+            <section role="search" aria-label="champ de recherche des recettes">
+                <form class="main-index__form" action="#"><label>
+                    Text field: <input type="text"  id="main-index__search-input">
+                </label>
+                champ de recherche des recettes<button type="submit">Submit</button></form>
+            </section>
+        </header>
+        <main class="main-index" tabindex="0">
+            <div class="main-index__wrapper">
+                <section class="main-index__tags-wrapper">
+                        <p>tags-wrapper</p>
+                        <div class="main-index__tags-for-ingredients main-index__tags-for" data-tag-type="ingredients"></div>
+                        <div class="main-index__tags-for-batter main-index__tags-for" data-tag-type="batter"></div>
+                        <div class="main-index__tags-for-utensils main-index__tags-for" data-tag-type="utensils"></div>
+                </section>
+                <section class="main-index__sort-inputs-container">
+                    <div class="dropdown-menu drop-down--ingredients" data-search-type="ingredients">
+                        <input id="sort-by-ingredients" class="dropdown-menu__sort-input dropdown-menu__sort-input--ingredient" type="text" placeholder="Rechercher un ingrédient" value="Ingredients" name="Ingrédients">
+                        <label class="dropdown-menu__sort-label" for="sort-by-ingredients"></label>
+                    </div>
+
+                    <div class="dropdown-menu drop-down--batter" data-search-type="batter">
+                        <input id="sort-by-batter" class="dropdown-menu__sort-input dropdown-menu__sort-input--batters" type="text" placeholder="Rechercher un appareil" value="batter" name="Appareils">
+                        <label class="dropdown-menu__sort-label" for="sort-by-ingredients"></label>
+                    </div>
+
+                    <div class="dropdown-menu drop-down--utensils" data-search-type="utensils">
+                        <input id="sort-by-utensils" class="dropdown-menu__sort-input dropdown-menu__sort-input--utensils" type="text" placeholder="Rechercher un ustensil" value="Ustensils" name="Ustensils">
+                        <label class="dropdown-menu__sort-label" for="sort-by-utensils"></label>
+                    </div>
+                </section>
+
+                <section class="main-index__cards-found-container" aria-label="Nombre de résultats">
+                </section>
+                <section class="main-index__recipes-container" aria-label="Recettes de cuisine">
+                </section>
+                <section class="recipe-card__not-found">
+                </section>
+            </div>
+
+            <div class="cards-container">
+
+            </div>
+        </main>
+    </div>
+    <script type="module" src="js/pages/index.js"></script>
+</body>
+</html>

@@ -1,0 +1,165 @@
+
+:host, :root {
+    --fa-style-family-classic: "Font Awesome 6 Free";
+    --fa-font-solid: normal 900 1em/1 "Font Awesome 6 Free";
+    
+    /* Yellow */
+    --Yellow: #FFD15B;
+    /* Black */
+    --Black: #1B1B1B;
+    /* Grey */
+    --Grey: #7A7A7A;
+    /* Light Grey */
+    --Light-grey: #C6C6C6;
+    --Light-light-grey: #EDEDED;
+    }
+
+body {
+        font-family: "Anton",sans-serif;
+        font-weight: 340;
+    }
+
+b,
+strong {
+    font-weight: 620;
+}
+
+.main-container {
+    display: flex;
+    flex-flow: wrap;
+    max-width: 1440px;
+    margin: auto;
+}
+
+header {/* lampos-aritonang-24gR_9lCdes-unsplash 1 */
+    width: 1440px;
+    height: 667px;
+    background: linear-gradient(0deg, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url("/assets/header/lampos-aritonang-24gR_9lCdes-unsplash 1.png");
+}
+
+.logo {
+    position: relative;
+    top: -23px;
+    left: 245px;
+    /* margin: 0 0 0 250px; */
+}
+
+header h1 { /* CHERCHEZ PARMI PLUS DE 1500 RECETTES DU QUOTIDIEN,SIMPLES ET DÉLICIEUSES */
+margin-top: 245px;
+
+font-style: normal;
+font-weight: 900;
+font-size: 44px;
+line-height: 66px;
+text-align: center;
+
+/* Yellow */
+color: var(--Yellow);
+}
+
+header h2 { /* Les petits plats */
+color: #FFFFFF;
+margin: 60px 0 0 60px;
+}
+
+*, ::before, ::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+    }
+
+.main-index {
+    background-color: var(--Light-light-grey);
+    width: 100%;
+    height: auto;
+}
+
+.main-index__sort-inputs-container {
+    display: flex;
+    width: 50%;
+    align-items: center;
+    justify-content: space-between;
+    margin-left: 97px;
+}    
+
+#main-index__search-input {
+    display: flex;
+    justify-content: center;
+    margin-top: 40px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 954px;
+    height: 72px;
+
+    background: #FFFFFF;
+    border-radius: 11px;
+}
+
+.dropdown-menu__sort-input {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 17px 16px;
+    gap: 63px;
+
+    width: 195px;
+    height: 56px;
+    left: 104px;
+    top: 688px;
+
+    background: #FFFFFF;
+    border-radius: 11px;
+    }
+
+input:focus {
+        border: none;
+        outline: none;
+    }
+
+.dropdown-menu__sort-input::placeholder {
+        color: var(--sort-input-placeholder-color);
+    }
+
+.cards-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, 300px);
+	justify-content: center;
+    gap: 72px;
+    padding: 10px;
+}
+
+.card {
+    background-color: #ffffff;
+    padding: 24px 0 16px;
+    text-align: center;
+    max-width: 380px;
+    height: 731px;
+    box-shadow: 0px 4px 34px 30px rgba(0, 0, 0, 0.04);
+    border-radius: 21px;
+}
+
+.card h2 {
+    color: #000000;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 27px;
+}
+
+.card h3 {
+    font-style: normal;
+    font-weight: 700;
+    font-size: 12px;
+    line-height: 16px;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+    color: var(--Grey);
+}
+
+.card p {
+    font-family: 'Outfit', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 19px;
+}
