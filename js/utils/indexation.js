@@ -37,7 +37,7 @@ function indexRecipes(recipes) {
             recipe.description.split(' ').forEach(word => {
                 word = word.toLowerCase();
                 // word = word.replace(/[^a-z]/gi, "");
-                word = word.normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[^a-z\s]/gi, "");
+                // word = word.normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[^a-z\s]/gi, "");
                 // word = word.replace(/"/g, "");  // Remplace tous les guillemets dans le mot
                 word = word.replace(/ant/g, "")
                 word = word.replace(/er/g, "")
