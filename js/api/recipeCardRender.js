@@ -1,5 +1,5 @@
 import { CreatReceipCard } from '../utils/Card.js';
-import { Recipe } from '../Recipe.js';
+import { Recipe } from '../api/Recipe.js';
 
 
 export class RecipeCardRender {

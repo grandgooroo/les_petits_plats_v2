@@ -1,5 +1,5 @@
-import { DataService } from '../DataService.js';
-import { Recipe } from '../Recipe.js';
+import { DataService } from '../api/DataService.js';
+import { Recipe } from '../api/Recipe.js';
 import { indexRecipes } from '../utils/Indexation.js';
 
 export class receiptsData { 

@@ -1,9 +1,8 @@
-// import { DataService } from '../api/dataService.js';
 import { receiptsData } from '../api/ReceiptsData.js';
-// import { Recipe } from '../api/Recipe.js';
 import { RecipeCardRender } from '../api/RecipeCardRender.js';
-import { RecipeList } from '../api/Recipe.js';
-// import { indexRecipes } from '../utils/Indexation.js';
+import { RecipeList } from '../api/RecipeList.js';
+
+
 
 const recipesService = new receiptsData();
 console.log(recipesService)
