@@ -1,26 +1,10 @@
-import { DataService } from '../api/dataService.js';
-import { Recipe } from '../api/recipe.js';
-import { RecipeCardRender } from '../api/recipeCardRender.js';
-import { RecipeList } from '../api/recipe.js';
-import { indexRecipes } from '../utils/indexation.js';
+// import { DataService } from '../api/dataService.js';
+import { receiptsData } from '../api/ReceiptsData.js';
+// import { Recipe } from '../api/Recipe.js';
+import { RecipeCardRender } from '../api/RecipeCardRender.js';
+import { RecipeList } from '../api/Recipe.js';
+// import { indexRecipes } from '../utils/Indexation.js';
 
-class receiptsData { 
-    constructor() {
-      // Initialisation des propriétés 
-    this.jsonFile = "data/recipes.json";
-    }
-
-    async init() { 
-        const dataService = new DataService(this.jsonFile);
-        const recipesData = await dataService.fetchData(); // Transforme la reponse json en data et data et décomposé en variables photographers et media
-        this.recipes = recipesData.map(recipeData => new Recipe(recipeData));
-
-        // Indexation des recettes et stockage de l'index
-        this.globalIndex = indexRecipes(this.recipes);
-        // console.log(this.globalIndex)
-        return this.recipes;
-    }
-}
 const recipesService = new receiptsData();
 console.log(recipesService)
 
