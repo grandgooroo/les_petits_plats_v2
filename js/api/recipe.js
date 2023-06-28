@@ -2,19 +2,24 @@ import { Ingredient } from '../api/Ingredient.js';
 
 export class Recipe {
     constructor(recipeData) {
-        this.id = recipeData.id;
-        this.image = recipeData.image;
-        this.name = recipeData.name;
-        this.servings = recipeData.servings; // Portion
+        Object.assign(this, recipeData); // Remplace la déclaration "this.X"
+        this.cardElement = document.createElement("article");
+    }
 
-        this.ingredients = recipeData.ingredients.map(ingredientData => // Nouvelle instance de la class Ingredient pour créer un tableau (d'objets) des ingredients
-            new Ingredient(ingredientData.ingredient, ingredientData.quantity, ingredientData.unit)
-        );
-
-        this.time = recipeData.time;
-        this.description = recipeData.description;
-        this.appliance = recipeData.appliance; // Electroménager
-        this.ustensils = recipeData.ustensils;
+    render() {
+        this.cardElement.innerHTML = `
+        <div class="card">
+            <h2>${this.name}</h2>
+            <h3>Déscription</h3>
+                <p>${this.description}</p>
+            <h3>Ingrédients: 
+                <p>
+                    ${this.ingredients.map(ingredient => `${ingredient.name}`).join('')}
+                </p>
+            </h3>
+        </div>
+            `;
+            return this.cardElement;
     }
 
     // Méthodes pour manipuler les recettes
