@@ -1,8 +1,8 @@
-import { Ingredient } from '../api/Ingredient.js';
-
 export class Recipe {
     constructor(recipeData) {
+        // console.log(`Creating a recipe with data:`, recipeData);
         Object.assign(this, recipeData); // Remplace la déclaration "this.X"
+        // console.log(`Created recipe with ID:`, this.id);
         this.cardElement = document.createElement("article");
     }
 
@@ -12,11 +12,10 @@ export class Recipe {
             <h2>${this.name}</h2>
             <h3>Déscription</h3>
                 <p>${this.description}</p>
-            <h3>Ingrédients: 
-                <p>
-                    ${this.ingredients.map(ingredient => `${ingredient.name}`).join('')}
-                </p>
-            </h3>
+            <h3>Ingrédients:</h3>
+            <p>
+            ${this.ingredients.map(ingredient => `${ingredient.ingredient}`).join(', ')}
+            </p>
         </div>
             `;
             return this.cardElement;
