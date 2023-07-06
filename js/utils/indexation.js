@@ -1,7 +1,6 @@
 export { indexRecipes };
 
 function indexRecipes(recipes) {
-
     let globalIndex = {};
     let excludedWords = ["/[\"\']([^\"\']*)[\"\']/","\x22", "\"", "dans", "metre", "ajout", "alors", "le", "la", "les", "d'", "de", "du", "des", "un", "une", "et", "a", "à", "!", ":", ",", ".", "'", "d'", 'l', "(", ")", "avec", "afin", "avant", "ainsi", "votre", "vous"];
     let wordEndings = ["ant", "er", "ez"];

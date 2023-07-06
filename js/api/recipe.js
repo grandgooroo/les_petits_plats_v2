@@ -1,3 +1,5 @@
+import { MEDIA_FOLDER } from '../utils/MediaPath.js';
+
 export class Recipe {
     constructor(recipeData) {
         // console.log(`Creating a recipe with data:`, recipeData);
@@ -7,8 +9,11 @@ export class Recipe {
     }
 
     render() {
+        const mediaFolder = `${MEDIA_FOLDER}`;
+
         this.cardElement.innerHTML = `
         <div class="card">
+            <img src="${mediaFolder}/${this.image}" alt="nom de l'image, ${this.title}" class="img">
             <h2>${this.name}</h2>
             <h3>Déscription</h3>
                 <p>${this.description}</p>
@@ -19,15 +24,6 @@ export class Recipe {
         </div>
             `;
             return this.cardElement;
-    }
-
-    // Méthodes pour manipuler les recettes
-    containsIngredient(ingredientName) { // "contientIngredient" Pour rechercher des recettes en fonction des ingrédients doublons avec this.ingredients (ingredientData)
-        return this.ingredients.some(ingredient => ingredient.name === ingredientName);
-    }
-
-    containsKeyword(keyword) { // "contientMotClé" Pour rechercher des mots clés dans la description de la recette.
-        return this.description.includes(keyword);
     }
 }
 

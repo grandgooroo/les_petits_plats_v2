@@ -18,12 +18,12 @@ export class App {
                 // L'index des recettes
                 this.globalIndex = globalIndex;
                 // this.globalIndex = this.recipesService.globalIndex;
-                console.log(this.globalIndex)
+                // console.log(this.globalIndex)
                 // La liste de toutes les recettes
                 // this.allRecipes = recipes;
                 // console.log(this.allRecipes)
                 this.recipesById = recipesById;
-                console.log(this.recipesById)
+                // console.log(this.recipesById)
                 // La liste des résultats de la recherche textuelle
                 this.searchResults = [];
                 // La liste des recettes affichées (prenant en compte les filtres)
@@ -34,25 +34,30 @@ export class App {
             });
 
             // Ajout écouteur d'événement sur la champ de recherche principal
-            document.getElementById('main-index__search-input').oninput = function() {
-                const query = this.value;
+            document.getElementById('main-index__search-input').oninput = (event) => {
+                const query = event.target.value;
                 this.searchResults = this.search(query);
                 console.log(this.searchResults);
+                this.displayedRecipes = this.searchResults; // Update displayedRecipes
                 this.refreshRecipeDisplay();
-            }.bind(this);
+            };
         }
 
         search(query) {
-            let recipeList = new RecipeList(this.globalIndex);
-            const results = recipeList.search(query);
-            return results;
+            const lowerCaseQuery = query.toLowerCase();
+// Dans le dictionnaire indexé par ID des recette,
+// filtre les recettes qui correspondent à la requette en comparant au contenu du nom/description des recettes
+            return Object.values(this.recipesById).filter(recipe =>
+                recipe.description.toLowerCase().includes(lowerCaseQuery) ||
+                recipe.name.toLowerCase().includes(lowerCaseQuery)
+            );
         }
 
 // Met à jour l'interface utilisateur pour afficher les recettes de `this.displayedRecipes`
         refreshRecipeDisplay() {
             // Récupere l'élément HTML où les recettes doivent être affichées
             const recipeDisplay = document.querySelector('.cards-container');
-            // Vider cet élément
+            // Vide cet élément
             recipeDisplay.innerHTML = '';
             // Pour chaque recette dans this.displayedRecipes
             for(let recipe of this.displayedRecipes) {
@@ -81,23 +86,22 @@ export class App {
     //     return results;
     // }
 
-        // Ajout écouteur d'événement sur la champ de recherche principal
-        // addEventListeners() {
-        //     document.getElementById('main-index__search-input').oninput = (event) => {
-        //         const query = event.target.value;
-        //         const results = this.recipeList.search(query);
-        //         console.log(results);
-        //         // ...rafraîchir l'affichage des recettes avec les résultats...
-        //     };
-        // }
+    // Méthodes pour manipuler les recettes
+    // Si l'utilisateur selectionne un ingrédient dans la liste alors filter avec les méthodes suivante
+        filterRecipesByIngredient(ingredient) {
+            // On utilise la méthode `Object.values()` pour obtenir toutes les recettes sous forme de tableau
+            // ensuite on utilise `filter()` pour filtrer ce tableau basé sur l'ingrédient
+            this.displayedRecipes = Object.values(this.recipesById).filter(recipe => recipe.containsIngredient(ingredient));
+            this.refreshRecipeDisplay();
+        }
 
-// Si l'utilisateur selectionne un ingrédient dans la liste alors filter avec la méthode suivante
-        // filterRecipesByIngredient(ingredient) {
-        //     // On utilise la méthode `Object.values()` pour obtenir toutes les recettes sous forme de tableau
-        //     // ensuite on utilise `filter()` pour filtrer ce tableau basé sur l'ingrédient
-        //     this.displayedRecipes = Object.values(this.recipesById).filter(recipe => recipe.containsIngredient(ingredient));
-        //     this.refreshRecipeDisplay();
-        // }
+        findRecipesByKeyword(keyword) { // "contientMotClé" Pour rechercher des mots clés dans la description de la recette.
+            return this.description.includes(keyword);
+        }
 
+        // Ajouter Méthode pour trier les recettes par appareil
+        findRecipesByAppliance(appliance) {
+            return this.recipes.filter(recipe => recipe.appliance === appliance);
+        }
 }
 

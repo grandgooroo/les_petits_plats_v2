@@ -17,7 +17,7 @@ export class ReceiptsData {
             this.recipesById[recipe.id] = recipe; // Crée un objet où chaque clé est un ID de recette
         });                                        // et chaque valeur est l'OBJ recette correspondant
         // * À la fin de cette boucle, this.recipesById est un objet qui contient toutes les recettes, indexées par leur ID.
-        console.log(this.recipesById)
+        // console.log(this.recipesById)
 
         // Possible aussi avec 'map'
         // this.recipesByIdMap = recipes.reduce((acc, recipe) => {
