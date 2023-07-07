@@ -2,9 +2,7 @@ import { ReceiptsData } from '../api/ReceiptsData.js';
 import { RecipeList } from '../api/RecipeList.js';
 
 // Gére l'interaction l'utilisateur avec l'interface.
-// *C'est dans cette classe globale que tu stockeras les données dont tu vas avoir besoin :*
-// *- l'index des recettes
-// *- la liste de toutes les recettes
+// *- C'est dans cette classe globale que tu stockeras les données dont tu vas avoir besoin :*
 // *- la liste des résultats de la recherche textuelle
 // *- la liste des recettes affichées (prenant en compte les filtres)
 
@@ -44,14 +42,29 @@ export class App {
         }
 
         search(query) {
-            const lowerCaseQuery = query.toLowerCase();
-// Dans le dictionnaire indexé par ID des recette,
-// filtre les recettes qui correspondent à la requette en comparant au contenu du nom/description des recettes
-            return Object.values(this.recipesById).filter(recipe =>
-                recipe.description.toLowerCase().includes(lowerCaseQuery) ||
-                recipe.name.toLowerCase().includes(lowerCaseQuery)
-            );
+        const lowerCaseQuery = query.toLowerCase();
+        // Dans le dictionnaire indexé par ID des recettes, filtre les recettes
+    //  qui correspondent à la requette en comparant au contenu du nom/description des recettes
+        const matchingRecipes = Object.values(this.recipesById).filter(recipe =>
+            recipe.description.toLowerCase().includes(lowerCaseQuery) ||
+            recipe.name.toLowerCase().includes(lowerCaseQuery)
+        );
+        // Créer une nouvelle instance de RecipeList avec les recettes correspondantes
+        this.recipeList = new RecipeList(matchingRecipes);
+        // Renvoyer les recettes correspondantes
+        return matchingRecipes;
         }
+
+        // Méthode d'application du filtre
+        applyFilter(filterType, filterValue) {
+            switch (filterType) {
+                case 'ingredient':
+                    this.recipeList = this.recipeList.filterRecipesByIngredient(filterValue);
+                    break;
+                // Autres Tag
+            }
+        }
+
 
 // Met à jour l'interface utilisateur pour afficher les recettes de `this.displayedRecipes`
         refreshRecipeDisplay() {
@@ -85,23 +98,5 @@ export class App {
     //         .sort((a, b) => scores[b.id] - scores[a.id]);  // Tri décroissant par score
     //     return results;
     // }
-
-    // Méthodes pour manipuler les recettes
-    // Si l'utilisateur selectionne un ingrédient dans la liste alors filter avec les méthodes suivante
-        filterRecipesByIngredient(ingredient) {
-            // On utilise la méthode `Object.values()` pour obtenir toutes les recettes sous forme de tableau
-            // ensuite on utilise `filter()` pour filtrer ce tableau basé sur l'ingrédient
-            this.displayedRecipes = Object.values(this.recipesById).filter(recipe => recipe.containsIngredient(ingredient));
-            this.refreshRecipeDisplay();
-        }
-
-        findRecipesByKeyword(keyword) { // "contientMotClé" Pour rechercher des mots clés dans la description de la recette.
-            return this.description.includes(keyword);
-        }
-
-        // Ajouter Méthode pour trier les recettes par appareil
-        findRecipesByAppliance(appliance) {
-            return this.recipes.filter(recipe => recipe.appliance === appliance);
-        }
 }
 
