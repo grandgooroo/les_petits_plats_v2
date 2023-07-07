@@ -45,8 +45,6 @@ header {/* lampos-aritonang-24gR_9lCdes-unsplash 1 */
 }
 
 header h1 { /* CHERCHEZ PARMI PLUS DE 1500 RECETTES DU QUOTIDIEN,SIMPLES ET DÉLICIEUSES */
-margin-top: 245px;
-
 font-style: normal;
 font-weight: 900;
 font-size: 44px;
@@ -74,6 +72,14 @@ margin: 60px 0 0 60px;
     height: auto;
 }
 
+.slogan {
+    display: flex;
+    width: 890px;
+    flex-direction: column;
+    flex-shrink: 0; 
+    margin: 120px auto 50px auto;
+}
+
 .main-index__sort-inputs-container {
     display: flex;
     width: 50%;
@@ -82,33 +88,63 @@ margin: 60px 0 0 60px;
     margin-left: 97px;
 }    
 
-#main-index__search-input {
+#main-index__search-contairer {
+    position: relative;
     display: flex;
+    flex-shrink: 0;
+    align-items: stretch;
     justify-content: center;
-    margin-top: 40px;
     margin-left: auto;
     margin-right: auto;
+    font-size: 24px;
     width: 954px;
     height: 72px;
-
     background: #FFFFFF;
-    border-radius: 11px;
+    border-radius: 10px;
+}
+
+#main-index__search-input {
+    margin-left: auto;
+    margin-right: auto;
+    width: 80%;
+}
+
+#main-index__search-contairer input {
+    width: 100%;
+    height: 100%;
+    border: none;
+    color: var(--grey, #7A7A7A);
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+
+#btn-search {
+    width: 51px;
+    height: 52px;
+    margin: 10px;
+    background: url("/public/images/loop-cta.svg"), rgb(44, 44, 44) 50% / cover no-repeat;
+    border: none;
+    border-radius: 10px;
+    color: #FFF;
+    outline: 0;
+    cursor: pointer;
 }
 
 .dropdown-menu__sort-input {
-    display: flex;
-    flex-direction: row;
+    display: inline-flex;
     align-items: center;
     padding: 17px 16px;
+    margin: 20px;
     gap: 63px;
-
     width: 195px;
     height: 56px;
     left: 104px;
     top: 688px;
-
     background: #FFFFFF;
     border-radius: 11px;
+    border: none;
     }
 
 input:focus {
@@ -122,20 +158,20 @@ input:focus {
 
 .cards-container {
     display: grid;
-    grid-template-columns: repeat(auto-fit, 300px);
+    grid-template-columns: repeat(auto-fit, 380px);
 	justify-content: center;
     gap: 72px;
     padding: 10px;
 }
 
 .card {
-    background-color: #ffffff;
-    padding: 24px 0 16px;
-    text-align: center;
-    max-width: 380px;
-    height: 731px;
-    box-shadow: 0px 4px 34px 30px rgba(0, 0, 0, 0.04);
     border-radius: 21px;
+    text-align: center;
+    width: 380px;
+    height: 731px;
+    flex-shrink: 0;
+    background-color: #ffffff;
+    box-shadow: 0px 4px 34px 30px rgba(0, 0, 0, 0.04);
 }
 
 .card h2 {
@@ -165,12 +201,20 @@ input:focus {
 }
 
 .card img {
-    height: 300px;
-    width: 250px;
-    max-block-size: 200px;
-    border-radius: 10px;
+    height: 253px;
+    width: 380px;
+    /* max-block-size: 200px; */
     object-fit: cover;
-    padding: 5px;
-    cursor: pointer;
-    transition: opacity 0.3s;
+    background: url(<path-to-image>), lightgray 50% / cover no-repeat;
+    border-radius: 21px 21px 0 0;
+}
+
+.temp {
+    display: inline-flex;
+    padding: 5px 15px;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    border-radius: 14px;
+    background: var(--yellow, #FFD15B);
 }

@@ -14,18 +14,20 @@ export class Recipe {
         this.cardElement.innerHTML = `
         <div class="card">
             <img src="${mediaFolder}/${this.image}" alt="nom de l'image, ${this.title}" class="img">
-            <h2>${this.name}</h2>
-            <h3>Déscription</h3>
-                <p>${this.description}</p>
-            <h3>Ingrédients:</h3>
-            <p>
-            ${this.ingredients.map(ingredient => `${ingredient.ingredient}`).join(', ')}
-            </p>
+            <span class="temp">10min</span>
+            <div class="recette">
+                    <h2>${this.name}</h2>
+                    <h3>Déscription</h3>
+                    <p>${this.description}</p>
+                </div>
+                <div class="ingredients">
+                    <h3>Ingrédients:</h3>
+                        <p>
+                        ${this.ingredients.map(ingredient => `${ingredient.ingredient}`).join(', ')}
+                        </p>
+                <div>
         </div>
             `;
             return this.cardElement;
     }
 }
-
-
-
