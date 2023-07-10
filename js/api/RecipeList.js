@@ -5,26 +5,47 @@ export class RecipeList {
     }
 
     addRecipe(recipe) {
-        this.recipes.push(recipe);
+        this.recipes[recipe.id] = recipe;
     }
 
-    getRecipes() {
+    getRecipesById() {
         return this.recipes;
     }
 
-    // Méthodes pour manipuler les recettes
-    // Si l'utilisateur selectionne un ingrédient dans la liste alors filter avec les méthodes suivante
-    filterRecipesByIngredient(ingredient) {
-        const filteredRecipes = this.recipes.filter(recipe => recipe.hasIngredient(ingredient));
-        return new RecipeList(filteredRecipes);
+    getUniqueIngredients() {
+        let ingredients = [];
+        for (let recipeId in this.recipes) {
+            let recipeIngredients = this.recipes[recipeId].ingredients.map(ingredientObj => ingredientObj.ingredient);
+            ingredients = [...ingredients, ...recipeIngredients];
+        }
+        return [...new Set(ingredients)];
     }
 
-    findRecipesByKeyword(keyword) { // "contientMotClé" Pour rechercher des mots clés dans la description de la recette.
-        return this.description.includes(keyword);
+    search(query) {
+        const lowerCaseQuery = query.toLowerCase();
+        const results = {};
+
+        for (const [recipeId, recipe] of Object.entries(this.recipes)) {
+            if (
+                recipe.description.toLowerCase().includes(lowerCaseQuery) ||
+                recipe.name.toLowerCase().includes(lowerCaseQuery)
+            ) {
+                results[recipeId] = recipe;
+            }
+        }
+
+        return new RecipeList(results);
     }
 
-    // Ajouter Méthode pour trier les recettes par appareil
-    findRecipesByAppliance(appliance) {
-        return this.recipes.filter(recipe => recipe.appliance === appliance);
+    display(container) {
+        container.innerHTML = '';
+        for(let recipeId in this.recipes) {
+            let recipeElement = this.recipes[recipeId].render();
+            container.appendChild(recipeElement);
+        }
+    }
+
+    clone() {
+        return new RecipeList({...this.recipes});
     }
 }

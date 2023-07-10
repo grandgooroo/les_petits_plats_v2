@@ -80,9 +80,25 @@ margin: 60px 0 0 60px;
     margin: 120px auto 50px auto;
 }
 
+.total-result-search {
+    display: flex;
+    align-items: center;
+    width: 20%;
+    margin-left: 97px;
+    color: var(--black, #1B1B1B);
+    font-size: 21px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal; 
+}
+
+.main-index__wrapper {
+    display: flex;
+}
+
 .main-index__sort-inputs-container {
     display: flex;
-    width: 50%;
+    width: 60%;
     align-items: center;
     justify-content: space-between;
     margin-left: 97px;
@@ -217,4 +233,134 @@ input:focus {
     gap: 10px;
     border-radius: 14px;
     background: var(--yellow, #FFD15B);
+}
+
+/* DropDownMenu */
+.customInputContainer {
+    width: 20rem;
+    display: flex;
+    max-width: 20rem;
+    margin-top: 2rem;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.customInputContainer .customInput {
+    margin: 0 1rem;
+    cursor: pointer;
+    user-select: none;
+    font-size: 1.16rem;
+    justify-content: space-between;
+    padding: 0.6rem 1rem 0.6rem 0.6rem;
+}
+
+.customInputContainer .customInput i {
+    transition: transform 0.3s ease-in-out;
+}
+
+.customInputContainer.show .customInput i {
+    transform: rotate(90deg);
+}
+
+.customInputContainer :is(.customInput, .options) {
+    width: 100%;
+    display: flex;
+    color: #202020;
+    background: #fff;
+    align-items: center;
+    border-radius: 0.3rem;
+}
+
+.customInputContainer .options {
+    display: none;
+    padding: 0.6rem;
+    font-size: 1.1rem;
+    justify-content: start;
+    flex-direction: column;
+    margin: 0.8rem 1rem 0rem 1rem;
+    transition: background-color 0.1s ease-in-out;
+}
+
+.customInputContainer.show .options {
+    display: block;
+}
+
+.customInputContainer .options :is(.searchInput, ul) {
+    width: 100%;
+    max-height: 15rem;
+    overflow-y: scroll;
+    position: relative;
+}
+
+.customInputContainer .options ul::-webkit-scrollbar {
+    width: 6px;
+    position: relative;
+}
+
+.customInputContainer .options ul::-webkit-scrollbar-track{
+    width: 2px;
+    border-radius: .2rem;
+    background: rgb(0 0 0 / 10%)
+}
+
+.customInputContainer .options ul::-webkit-scrollbar-thumb{
+    border-radius: .2rem;
+    background: rgb(0 0 0 / 30%);
+}
+
+.customInputContainer .options .searchInput {
+    display: flex;
+    padding: 0 0.4rem;
+    overflow-y: auto;
+    align-items: center;
+    border-radius: 0.4rem;
+    color: rgb(0 0 0 / 50%);
+    border: 2px solid rgb(0 0 0 / 30%);
+}
+
+.customInputContainer .options .searchInput.focus {
+    border: 2px solid rgb(52 211 153 / 70%);
+}
+
+.customInputContainer .options .searchInput input[type="text"] {
+    border: 0;
+    width: 100%;
+    outline: none;
+    height: 2.5rem;
+    font-size: 1rem;
+    padding: 0 0.4rem;
+    border-radius: 0.4rem;
+}
+
+.customInputContainer .options .searchInput input[type="text"]::placeholder {
+    font-size: 1rem;
+    color: rgb(0 0 0 / 50%);
+}
+
+.customInputContainer .options ul {
+    margin: 0.5rem 0;
+}
+
+.customInputContainer .options ul li {
+    cursor: pointer;
+    list-style: none;
+    padding: 0.4rem 0.4rem;
+    border-bottom: 1px solid rgb(204 204 204 / 50%);
+}
+
+.customInputContainer .options ul li.selected {
+    background: rgb(52 211 153 / 50%);
+}
+
+.customInputContainer .options ul li.selected:hover {
+    background: rgb(52 211 153 / 50%);
+}
+
+.customInputContainer .options ul li:last-child {
+    border: 0;
+}
+
+.customInputContainer .options ul li:hover {
+    background: rgb(52 211 153 / 20%);
 }

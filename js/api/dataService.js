@@ -1,18 +1,14 @@
 export class DataService {
-
-    static async fetchJson(url) { // Requette asynchrone
-        const response = await fetch(url); // utilise le chemin du fichier json passé en paramètre ()
-        const data = await response.json();
-        return data; // retourne les données
-        // Ajouter gestion d'erreur
+    static async fetchJson(url) {
+        try {
+            const response = await fetch(url);
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            const data = await response.json();
+            return data;
+        } catch (error) {
+            console.error('There was a problem fetching the data:', error);
+        }
     }
 }
-
-// Valable aussi sous forme d'objet
-// export const DataService = {
-//     async fetchJson(url) { // Requette asynchrone
-//         const response = await fetch(url); // utilise le chemin du fichier json passé en paramètre ()
-//         const data = await response.json();
-//         return data; // retourne les données
-//     }
-// }
