@@ -24,11 +24,11 @@
             <section class="slogan">
                 <h1 class="header__slogan">CHERCHEZ PARMI PLUS DE 1500 RECETTES DU QUOTIDIEN,SIMPLES ET DÉLICIEUSES</h1>
             </section>
-                <section role="search" aria-label="champ de recherche des recettes">
+            <section role="search" aria-label="champ de recherche des recettes">
                 <form class="main-index__form" action="#">
                     <div id="main-index__search-contairer">
                         <label id="main-index__search-input">
-                            <input type="search" name="Rechercher une recette" value="Rechercher une recette, un ingrédient, ..." placeholder="Rechercher une recette">
+                            <input type="search" name="Rechercher une recette"  placeholder="Rechercher une recette">
                         </label>
                             <button type="submit" id="btn-search" name="rechercher" aria-label="Rechercher"></button>
                     </div>
@@ -38,24 +38,15 @@
         <main class="main-index" tabindex="0">
             <div class="main-index__wrapper">
                 <section class="main-index__sort-inputs-container">
-                    <div class="dropdown-menu drop-down--ingredients" data-search-type="ingredients">
-                        <input id="sort-by-ingredients" class="dropdown-menu__sort-input dropdown-menu__sort-input--ingredient" type="text" placeholder="Rechercher un ingrédient" value="Ingrédients" name="Ingrédients">
-                        <label class="dropdown-menu__sort-label" for="sort-by-ingredients"></label>
+                    <div class="drop-down-ingredients" data-search-type="ingredients">
                     </div>
-
-                    <div class="dropdown-menu drop-down--batter" data-search-type="batter">
-                        <input id="sort-by-batter" class="dropdown-menu__sort-input dropdown-menu__sort-input--batters" type="text" placeholder="Rechercher un appareil" value="Appareils" name="Appareils">
-                        <label class="dropdown-menu__sort-label" for="sort-by-ingredients"></label>
+                    <div class="drop-down-batter" data-search-type="batter">
                     </div>
-
-                    <div class="dropdown-menu drop-down--utensils" data-search-type="utensils">
-                        <input id="sort-by-utensils" class="dropdown-menu__sort-input dropdown-menu__sort-input--utensils" type="text" placeholder="Rechercher un ustensil" value="Ustensiles" name="Ustensiles">
-                        <label class="dropdown-menu__sort-label" for="sort-by-utensils"></label>
+                    <div class="drop-down-utensils" data-search-type="utensils">
                     </div>
                 </section>
-                <span class="total-result-search">40 recettes</span>
-
                 <section class="main-index__cards-found-container" aria-label="Nombre de résultats">
+                    <span class="total-result-search">40 recettes</span>
                 </section>
                 <section class="main-index__recipes-container" aria-label="Recettes de cuisine">
                 </section>
