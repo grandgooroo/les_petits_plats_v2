@@ -8,17 +8,39 @@ export class RecipeList {
         this.recipes[recipe.id] = recipe;
     }
 
-    getRecipesById() {
+    find(recipeId) {
+        return this.recipes[recipeId]; 
+    }
+
+    getRecipes() {
+        // console.log(this.recipes)
         return this.recipes;
     }
 
-    getUniqueIngredients() {
-        let ingredients = [];
+    get entries() { 
+        return Object.entries(this.recipes);
+    }
+
+    getUniqueTags(tagType) {
+        let tags = [];
         for (let recipeId in this.recipes) {
-            let recipeIngredients = this.recipes[recipeId].ingredients.map(ingredientObj => ingredientObj.ingredient);
-            ingredients = [...ingredients, ...recipeIngredients];
+            let recipeTags;
+            switch(tagType) {
+                case "ingredients":
+                    recipeTags = this.recipes[recipeId].ingredients.map(ingredientObj => ingredientObj.ingredient);
+                    break;
+                case "appliance":
+                    recipeTags = [this.recipes[recipeId].appliance];
+                    break;
+                case "ustensils":
+                    recipeTags = this.recipes[recipeId].ustensils;
+                    break;
+                default:
+                    return [];
+            }
+            tags = [...tags, ...recipeTags];
         }
-        return [...new Set(ingredients)];
+        return [...new Set(tags)];
     }
 
     search(query) {
@@ -34,7 +56,7 @@ export class RecipeList {
             }
         }
 
-        return new RecipeList(results);
+        return new RecipeList(results); // * <= Utiliser le résultat de ça pour filtrer !?
     }
 
     display(container) {

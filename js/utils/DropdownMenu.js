@@ -1,7 +1,16 @@
 export class DropdownMenu {
-    constructor(tags, dropdownElementSelector) {
+    constructor(tags, filterName, dropdownElementSelector, searchEngine) {
         this.dropdownElement = document.querySelector(dropdownElementSelector);
         this.tags = tags;
+        this.filterName = filterName;
+        this.searchEngine = searchEngine; // Stock la référence à SearchEngine
+
+        console.log('Creating new DropdownMenu with parameters:', {
+            tags,
+            filterName,
+            dropdownElementSelector,
+            searchEngine
+        });
 
         this.render();
 
@@ -10,9 +19,29 @@ export class DropdownMenu {
         this.searchInput = document.querySelector('.searchInput input');
         this.ul = document.querySelector('.options ul');
         this.customInputContainer = document.querySelector('.customInputContainer');
-        // this.container = document.querySelector('.main-index__sort-inputs-container');
 
         this.addEventListeners();
+
+        this.searchInput.addEventListener('input', (e) => {
+            const searchQuery = e.target.value.toLowerCase();
+            this.ul.innerHTML = '';
+            console.log(e.target.value)
+            for (let tag of this.tags) {
+                if (tag.toLowerCase().includes(searchQuery)) {
+                    const li = document.createElement("li");
+                    const tagName = document.createTextNode(tag);
+                    li.appendChild(tagName);
+                    this.ul.appendChild(li);
+
+                    // Attacher un écouteur d'événement au nouvel élément li
+                    li.addEventListener('click', () => {
+                        console.log(`Tag ${tag} sélectionné`);
+                        // Ajouter le tag sélectionné au conteneur de tags sélectionnés
+                        this.addTagToSelectedContainer(tag);
+                    });
+                }
+            }
+        });
     }
 
     addEventListeners() {
@@ -40,8 +69,8 @@ export class DropdownMenu {
 
         this.ul.querySelectorAll('li').forEach(li => {
             li.addEventListener('click', (e) => {
-                let selectdItem = e.target.innerText;
-                this.selectedData.innerText = selectdItem;
+                let selectedTag = e.target.innerText;
+                this.addTagToSelectedContainer(selectedTag);
 
                 for (const li of document.querySelectorAll("li.selected")) {
                     li.classList.remove("selected");
@@ -50,40 +79,63 @@ export class DropdownMenu {
                 this.customInputContainer.classList.toggle('show');
             });
         });
-
-        this.searchInput.addEventListener('keyup', (e) => {
-            this.updateData(e.target);
-        });
     }
 
-    updateData(data) {
-        let searchedVal = this.searchInput.value.toLowerCase();
-        let searched_tag = [];
+    updateTags(tags) {
+        this.tags = tags;
+        this.clearTags();
+        this.populateTags();
+    }
 
-        searched_tag = this.tags.filter(tag => {
-            return tag.toLocaleLowerCase().startsWith(searchedVal);
-        }).map(tag => {
-            return `<li onClick="this.updateData(this)">${tag}</li>`;
-        }).join('');
-        this.ul.innerHTML = searched_tag ? searched_tag : "<p style='margin-top: 1rem;'>Opps can't find any result <p style='margin-top: .2rem; font-size: .9rem;'>Try searching something else.</p></p>";
+    clearTags() {
+        while (this.ul.firstChild) {
+            this.ul.removeChild(this.ul.firstChild);
+        }
+    }
+
+    populateTags() {
+        let tagsLength = this.tags.length;
+        for (let i = 0; i < tagsLength; i++) {
+            let tag = this.tags[i];
+            const li = document.createElement("li");
+            const tagName = document.createTextNode(tag);
+            li.appendChild(tagName);
+            this.ul.appendChild(li);
+        }
+    }
+
+    addTagToSelectedContainer(tag) {
+        // Créer un nouvel événement personnalisé
+        const event = new CustomEvent('tagSelected', { detail: tag });
+    
+        // Lancer l'événement
+        this.dropdownElement.dispatchEvent(event);
+    
+        // Appeler addTag sur SearchEngine lorsque l'utilisateur sélectionne un tag
+        this.searchEngine.addTag(tag);
+    
+        // Retirer le tag de la liste des tags disponibles
+        this.tags = this.tags.filter(t => t !== tag);
+        this.updateTags(this.tags);
     }
 
     render() {
         this.dropdownElement.innerHTML = `
         <div class="customInputContainer">
                     <div class="customInput">
-                        <div class="selectedData">Custom Input</div>
+                        <div class="selectedData">${this.filterName}</div>
                         <i class="fa-solid fa-angle-right"></i>
                     </div>
                     <div class="options">
                         <div class="searchInput">
                             <i class="fa-solid fa-magnifying-glass"></i>
-                            <input type="text" id="searchInput" placeholder="Search">
+                            <input type="text" id="searchInput" placeholder="Search"> <!-- //* Cible eventListener -->
                         </div>
                         <ul>
                         </ul>
                     </div>
                 </div>
+        <div id="selected-tags-container"></div>
         `;
     }
 }
