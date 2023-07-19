@@ -22,12 +22,12 @@ export class App {
         // Instancier les menus déroulants
         const ingredients = this.allRecipes.getUniqueTags('ingredients');
         const appliances = this.allRecipes.getUniqueTags('appliance');
-        const utensils = this.allRecipes.getUniqueTags('utensils');
-        console.log(document.querySelector('.drop-down-ingredients'));
+        const utensils = this.allRecipes.getUniqueTags('ustensils');
+
         this.ingredientsDropdown = new DropdownMenu(ingredients, "Ingredients", ".drop-down-ingredients", this.searchEngine);
-        console.log(document.querySelector('.drop-down-batter'));
+
         this.applianceDropdown = new DropdownMenu(appliances, "Appliances", ".drop-down-batter", this.searchEngine);
-        console.log(document.querySelector('.drop-down-utensils'));
+
         this.utensilDropdown = new DropdownMenu(utensils, "Utensils", ".drop-down-utensils", this.searchEngine);
 
         this.ingredientsDropdown.dropdownElement.addEventListener('tagSelected', (event) => {

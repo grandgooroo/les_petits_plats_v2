@@ -14,18 +14,20 @@ export class DropdownMenu {
 
         this.render();
 
-        this.customInput = document.querySelector('.customInput');
-        this.selectedData = document.querySelector('.selectedData');
-        this.searchInput = document.querySelector('.searchInput input');
-        this.ul = document.querySelector('.options ul');
-        this.customInputContainer = document.querySelector('.customInputContainer');
+        // this.customInput = document.querySelector('.customInput');
+        //* Ajout de "this" pour ne pas récupérer que le premier élément dans le DOM qu'il trouve
+        this.customInput = this.dropdownElement.querySelector('.customInput');
+        this.selectedData = this.dropdownElement.querySelector('.selectedData');
+        this.searchInput = this.dropdownElement.querySelector('.searchInput input');
+        this.ul = this.dropdownElement.querySelector('.options ul');
+        this.customInputContainer = this.dropdownElement.querySelector('.customInputContainer');
 
         this.addEventListeners();
 
         this.searchInput.addEventListener('input', (e) => {
             const searchQuery = e.target.value.toLowerCase();
             this.ul.innerHTML = '';
-            console.log(e.target.value)
+            // console.log(e.target.value)
             for (let tag of this.tags) {
                 if (tag.toLowerCase().includes(searchQuery)) {
                     const li = document.createElement("li");
@@ -46,10 +48,10 @@ export class DropdownMenu {
 
     addEventListeners() {
         window.addEventListener('click', (e) => {
-            if (document.querySelector('.searchInput').contains(e.target)) {
-                document.querySelector('.searchInput').classList.add('focus');
+            if (this.dropdownElement.querySelector('.searchInput').contains(e.target)) {
+                this.dropdownElement.querySelector('.searchInput').classList.add('focus');
             } else {
-                document.querySelector('.searchInput').classList.remove('focus');
+                this.dropdownElement.querySelector('.searchInput').classList.remove('focus');
             }
         });
 
@@ -85,6 +87,7 @@ export class DropdownMenu {
         this.tags = tags;
         this.clearTags();
         this.populateTags();
+        console.log(tags)
     }
 
     clearTags() {
@@ -107,13 +110,13 @@ export class DropdownMenu {
     addTagToSelectedContainer(tag) {
         // Créer un nouvel événement personnalisé
         const event = new CustomEvent('tagSelected', { detail: tag });
-    
+
         // Lancer l'événement
         this.dropdownElement.dispatchEvent(event);
-    
+
         // Appeler addTag sur SearchEngine lorsque l'utilisateur sélectionne un tag
         this.searchEngine.addTag(tag);
-    
+
         // Retirer le tag de la liste des tags disponibles
         this.tags = this.tags.filter(t => t !== tag);
         this.updateTags(this.tags);

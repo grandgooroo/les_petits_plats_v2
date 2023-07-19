@@ -425,11 +425,3 @@ input:focus {
     content: "";
     position: absolute;
 }
-
-.close-tags-btn::before:hover {
-    background-color: blue;
-}
-
-.close-tags-btn::after:hover {
-    background-color: blue;
-}

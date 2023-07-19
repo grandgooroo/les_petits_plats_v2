@@ -17,7 +17,7 @@ export class RecipeList {
         return this.recipes;
     }
 
-    get entries() { 
+    get entries() {
         return Object.entries(this.recipes);
     }
 
@@ -56,7 +56,7 @@ export class RecipeList {
             }
         }
 
-        return new RecipeList(results); // * <= Utiliser le résultat de ça pour filtrer !?
+        return new RecipeList(results); // * Utiliser le résultat de ça pour filtrer !?
     }
 
     display(container) {
