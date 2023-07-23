@@ -7,7 +7,8 @@ export class SearchEngine
         this.indexRecipes();
         this.searchResults = this.allRecipes.clone();
         // console.log(this.searchResults)
-        this.selectedTags = [];
+        this.selectedTags = []; //* conserve une trace des filtres actuellement appliqués par l'utilisateur
+        // * filter() utilise ces tags pour filtrer la liste des recettes à afficher
     }
 
     getSearchResults() {
@@ -31,10 +32,12 @@ export class SearchEngine
         return this.searchResults;
     }
 
-    //* Gestion des tags
+    //* Function pour stocker les tags dans le tableau puis filtre et met à jours les recettes
     addTag(tag) {
         this.selectedTags.push(tag);
         this.filter();
+        console.log("tag ajouté: ", tag);
+        console.log("tags actuellement sélectionnés: ", this.selectedTags);
     }
 
     removeTag(tag) {
@@ -43,13 +46,20 @@ export class SearchEngine
             this.selectedTags.splice(index, 1);
         }
         this.filter();
+        console.log("tag supprimé: ", tag);
+        console.log("tags actuellement sélectionnés: ", this.selectedTags);
     }
 
     filter () {
+        // S'il n'y a pas de tags sélectionnés, retourner toutes les recettes
+        if (this.selectedTags.length === 0) {
+            this.searchResults = this.allRecipes.clone();
+            return this.searchResults;
+        }
+
         const filteredResults = {}
         // filtrer les résultats de recherche (propriété searchResults)
-        console.log(this.searchResults.entries)
-        console.log(this.selectedTags)
+        // console.log(this.searchResults.entries)
         for (const [recipeId, recipe] of this.searchResults.entries) {  // Vérifier si la recette correspond à tous les tags sélectionnés
             const matchesAllTags = this.selectedTags.every(tag => {
                 // Vérifiez si la recette correspond au tag
@@ -63,12 +73,11 @@ export class SearchEngine
                 filteredResults[recipeId] = recipe;
             }
         }
-        console.log(filteredResults)
+        // console.log(filteredResults)
         // Retourner un nouvel Objet RecipeList en résultat
         this.searchResults = new RecipeList(filteredResults)
         console.log(this.searchResults);
         return this.searchResults;
-        // La class App ca récupérer cette nouvelle liste de recette pour les afficher
         // Il faut stoker les filtres sélectionnées, c'est la classe SearchEngine qui peut éventuellement le faire
     }
 
@@ -76,19 +85,19 @@ export class SearchEngine
         let globalIndex = {};
         let excludedWords = ["/[\"\']([^\"\']*)[\"\']/","\x22", "\"", "dans", "metre", "ajout", "alors", "le", "la", "les", "d'", "de", "du", "des", "un", "une", "et", "a", "à", "!", ":", ",", ".", "'", "d'", 'l', "(", ")", "avec", "afin", "avant", "ainsi", "votre", "vous"];
         let wordEndings = ["ant", "er", "ez"];
-    
+
         function processWord(word) {
             word = word.toLowerCase();
             word = word.normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[^a-z\s]/gi, "");
             wordEndings.forEach(ending => word = word.replace(new RegExp(ending, 'g'), ""));
             return word;
         }
-    
+
         for (const recipeId in this.allRecipes.getRecipes()) {
-        
+
             const recipe = this.allRecipes.find(recipeId);
             let index = new Set();
-    
+
             [...recipe.name.split(' '), ...recipe.description.split(' ')].forEach(word => { // "..." Opérateur spread combine les mots 
                 word = processWord(word);                                                   // du nom et de la déscription dans une seul liste
                 if (word.length > 3 && !excludedWords.includes(word)) {
@@ -100,11 +109,10 @@ export class SearchEngine
                     }
                 }
             });
-    
+
             recipe.index = index;
         };
-    
+
         this.globalIndex = globalIndex;
     }
-    
 }

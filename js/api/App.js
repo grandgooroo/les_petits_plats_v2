@@ -31,15 +31,15 @@ export class App {
         this.utensilDropdown = new DropdownMenu(utensils, "Utensils", ".drop-down-utensils", this.searchEngine);
 
         this.ingredientsDropdown.dropdownElement.addEventListener('tagSelected', (event) => {
-            this.addTagToSelectedContainer(event.detail, this.ingredientsDropdown);
+            this.addTagBtnToSelectedContainer(event.detail, this.ingredientsDropdown);
         });
 
         this.applianceDropdown.dropdownElement.addEventListener('tagSelected', (event) => {
-            this.addTagToSelectedContainer(event.detail, this.applianceDropdown);
+            this.addTagBtnToSelectedContainer(event.detail, this.applianceDropdown);
         });
 
         this.utensilDropdown.dropdownElement.addEventListener('tagSelected', (event) => {
-            this.addTagToSelectedContainer(event.detail, this.utensilDropdown);
+            this.addTagBtnToSelectedContainer(event.detail, this.utensilDropdown);
         });
 
         this.dropdownMenus = [this.ingredientsDropdown, this.applianceDropdown, this.utensilDropdown];
@@ -49,7 +49,7 @@ export class App {
         this.refreshRecipeDisplay();
     }
 
-    addTagToSelectedContainer(tag, dropdownMenu) {
+    addTagBtnToSelectedContainer(tag, dropdownMenu) {
         const selectedTagsContainer = document.getElementById("selected-tags-container");
         const tagElement = document.createElement("span");
         const tagBtn = document.createElement("div");
@@ -58,7 +58,7 @@ export class App {
         selectedTagsContainer.appendChild(tagElement);
         tagBtn.classList.add("close-tags-btn");
         tagElement.appendChild(tagBtn);
-
+        this.onTagSelected(tag, dropdownMenu.filterName, dropdownMenu);
         // Ajoute un écouteur d'événements au bouton de fermeture des tags
         tagBtn.addEventListener('click', (e) => {
             e.stopPropagation(); // Empêche l'événement 'click' de se propager aux éléments parents
@@ -67,26 +67,33 @@ export class App {
             // Ajouter le tag à la liste des tags disponibles
             dropdownMenu.tags.push(tag);
             dropdownMenu.updateTags(dropdownMenu.tags);
-
+            this.onTagDeselected(tag, dropdownMenu.filterName, dropdownMenu);
             // Appeler removeTag sur SearchEngine lorsque l'utilisateur supprime un tag
-            this.searchEngine.removeTag(tag);
+            // this.searchEngine.removeTag(tag);
+            console.log("tag supprimé du container")
         });
     }
 
-    onTagSelected(tag, tagType) {
+    onTagSelected(tag, tagType, dropdownMenu) {
         this.searchEngine.addTag(tag);
+        console.log("truc machin")
         this.displayedRecipes = this.searchEngine.filter();
+        console.table(this.displayedRecipes)
         const tags = this.displayedRecipes.getUniqueTags(tagType);
-        this.dropdownMenu.updateTags(tags);
+        dropdownMenu.updateTags(tags);
         this.refreshRecipeDisplay();
+        console.log("tag sélectionné")
     }
 
-    onTagDeselected(tag, tagType) {
+    onTagDeselected(tag, tagType, dropdownMenu) {
         this.searchEngine.removeTag(tag);
+        console.log(this.searchEngine)
         this.displayedRecipes = this.searchEngine.filter();
+        console.table(this.displayedRecipes)
         const tags = this.displayedRecipes.getUniqueTags(tagType);
-        this.dropdownMenu.updateTags(tags);
+        dropdownMenu.updateTags(tags);
         this.refreshRecipeDisplay();
+        console.log("tag désélectionné")
     }
 
     onInputSearch(event) {
@@ -122,19 +129,5 @@ export class App {
         const container = document.querySelector('.cards-container');
         this.displayedRecipes.display(container);
     }
-
-    // filterRecipesByIngredient(ingredient) {
-    //     this.displayedRecipes = Object.values(this.allRecipes.getRecipes()).filter(recipe => recipe.containsIngredient(ingredient));
-    //     this.refreshRecipeDisplay();
-    // }
-
-    // findRecipesByKeyword(keyword) {
-    //     return this.description.includes(keyword);
-    // }
-
-    // findRecipesByAppliance(appliance) {
-    //     return this.allRecipes.filter(recipe => recipe.appliance === appliance);
-    // }
-
 }
 

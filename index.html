@@ -14,7 +14,7 @@
         rel="stylesheet">
 
         <script src="https://kit.fontawesome.com/904e9ee361.js" crossorigin="anonymous"></script>
-        <link rel="icon" type="image/png" href="assets/logos/icon-logo.png">
+        <!-- <link rel="icon" type="image/png" href="assets/logos/icon-logo.png"> -->
 </head>
 <body>
     <div class="main-container">
@@ -28,7 +28,7 @@
                 <form class="main-index__form" action="#">
                     <div id="main-index__search-contairer">
                         <label id="main-index__search-input">
-                            <input type="search" name="Rechercher une recette"  placeholder="Rechercher une recette">
+                            <input type="search" name="query"  placeholder="Rechercher une recette">
                         </label>
                             <button type="submit" id="btn-search" name="rechercher" aria-label="Rechercher"></button>
                     </div>
@@ -38,12 +38,15 @@
         <main class="main-index" tabindex="0">
             <div class="main-index__wrapper">
                 <section class="main-index__sort-inputs-container">
-                    <div class="drop-down-ingredients" data-search-type="ingredients">
+                    <div class="main-index__sort-inputs-container-wrapper">
+                        <div class="drop-down-ingredients" data-search-type="ingredients">
+                        </div>
+                        <div class="drop-down-batter" data-search-type="batter">
+                        </div>
+                        <div class="drop-down-utensils" data-search-type="utensils">
+                        </div>
                     </div>
-                    <div class="drop-down-batter" data-search-type="batter">
-                    </div>
-                    <div class="drop-down-utensils" data-search-type="utensils">
-                    </div>
+                    <div class="main-index__sort-tags"></div>
                 </section>
                 <section class="main-index__cards-found-container" aria-label="Nombre de résultats">
                     <span class="total-result-search">40 recettes</span>

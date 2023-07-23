@@ -96,14 +96,6 @@ margin: 60px 0 0 60px;
     display: flex;
 }
 
-.main-index__sort-inputs-container {
-    display: flex;
-    width: 60%;
-    align-items: center;
-    justify-content: space-between;
-    margin-left: 97px;
-}    
-
 #main-index__search-contairer {
     position: relative;
     display: flex;
@@ -153,17 +145,45 @@ margin: 60px 0 0 60px;
     background: url("public/images/loop-ctaloop-cta-hover.svg"), var(--Yellow) 50% / cover no-repeat;
 }
 
-.dropdown-menu__sort-input {
-    display: inline-flex;
+.main-index__sort-inputs-container {
+    display: flex;
+    flex-direction: row;
+    width: 80%;
+    margin-left: 97px;
+    padding: 10px;
+    background-color: rgb(174, 223, 225);
+}  
+
+.main-index__sort-inputs-container-wrapper {
+    display: flex;
+    justify-content: space-around; 
     align-items: center;
+    width: 100%;
+    background-color: #9f9f9f;
+}
+
+.drop-down-ingredients,
+.drop-down-batter,
+.drop-down-utensils {
+    display: flex;
+    flex-flow: column wrap;
+    margin-right: auto;
+    height: 150px;
+    background-color: brown;
+}
+
+.main-index__sort-tags {
+background-color: #2b0ad0;
+}
+
+.dropdown-menu__sort-input {
+    z-index: 10;
+    /* display: inline-flex;
+    align-items: center; */
     padding: 17px 16px;
-    margin: 20px;
-    gap: 63px;
     width: 195px;
     height: 56px;
-    left: 104px;
-    top: 688px;
-    background: #FFFFFF;
+    background: #2b0ad0;
     border-radius: 11px;
     border: none;
     }
@@ -242,13 +262,15 @@ input:focus {
 
 /* DropDownMenu */
 .customInputContainer {
-    width: 20rem;
+    /* position: absolute; */
+    /* top: 100%; */
+    z-index: 10;
     display: flex;
-    max-width: 20rem;
-    margin-top: 2rem;
     align-items: center;
     flex-direction: column;
     justify-content: center;
+    width: max-content;
+    padding: 17px 0; 
 }
 
 .customInputContainer .customInput {
@@ -380,7 +402,7 @@ input:focus {
     display: inline-flex;
     padding: 17px 18px;
     align-items: center;
-    gap: 60px;
+    gap: 10px;
     border-radius: 10px;
     background-color: #FFD15B;
     cursor: pointer;

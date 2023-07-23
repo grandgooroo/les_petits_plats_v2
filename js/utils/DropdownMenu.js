@@ -3,7 +3,7 @@ export class DropdownMenu {
         this.dropdownElement = document.querySelector(dropdownElementSelector);
         this.tags = tags;
         this.filterName = filterName;
-        this.searchEngine = searchEngine; // Stock la référence à SearchEngine
+        // this.searchEngine = searchEngine; // Stock la référence à SearchEngine
 
         console.log('Creating new DropdownMenu with parameters:', {
             tags,
@@ -23,64 +23,51 @@ export class DropdownMenu {
         this.customInputContainer = this.dropdownElement.querySelector('.customInputContainer');
 
         this.addEventListeners();
-
-        this.searchInput.addEventListener('input', (e) => {
-            const searchQuery = e.target.value.toLowerCase();
-            this.ul.innerHTML = '';
-            // console.log(e.target.value)
-            for (let tag of this.tags) {
-                if (tag.toLowerCase().includes(searchQuery)) {
-                    const li = document.createElement("li");
-                    const tagName = document.createTextNode(tag);
-                    li.appendChild(tagName);
-                    this.ul.appendChild(li);
-
-                    // Attacher un écouteur d'événement au nouvel élément li
-                    li.addEventListener('click', () => {
-                        console.log(`Tag ${tag} sélectionné`);
-                        // Ajouter le tag sélectionné au conteneur de tags sélectionnés
-                        this.addTagToSelectedContainer(tag);
-                    });
-                }
-            }
-        });
+        this.populateTags();
+        this.searchInput.addEventListener('input', this.onSearchInputChanged.bind(this));
     }
 
     addEventListeners() {
         window.addEventListener('click', (e) => {
-            if (this.dropdownElement.querySelector('.searchInput').contains(e.target)) {
-                this.dropdownElement.querySelector('.searchInput').classList.add('focus');
-            } else {
-                this.dropdownElement.querySelector('.searchInput').classList.remove('focus');
+                    if (this.dropdownElement.querySelector('.searchInput').contains(e.target)) {
+                        this.dropdownElement.querySelector('.searchInput').classList.add('focus');
+                    } else {
+                        this.dropdownElement.querySelector('.searchInput').classList.remove('focus');
+                    }
+                });
+        
+                this.customInput.addEventListener('click', () => {
+                    this.customInputContainer.classList.toggle('show');
+                });
+        
+                this.populateTags();
+                this.ul.addEventListener('click', this.onClickTagList.bind(this));
+    }
+    
+    onClickTagList(event) {
+        if (event.target.tagName === 'LI') {
+            let selectedTag = event.target.innerText;
+            this.addTagToSelectedList(selectedTag);
+    
+            for (const li of document.querySelectorAll("li.selected")) {
+                li.classList.remove("selected");
             }
-        });
-
-        this.customInput.addEventListener('click', () => {
+            event.target.classList.add('selected');
             this.customInputContainer.classList.toggle('show');
-        });
-
-        let tagsLength = this.tags.length;
-
-        for (let i = 0; i < tagsLength; i++) {
-            let tag = this.tags[i];
-            const li = document.createElement("li");
-            const tagName = document.createTextNode(tag);
-            li.appendChild(tagName);
-            this.ul.appendChild(li);
         }
+    }
 
-        this.ul.querySelectorAll('li').forEach(li => {
-            li.addEventListener('click', (e) => {
-                let selectedTag = e.target.innerText;
-                this.addTagToSelectedContainer(selectedTag);
-
-                for (const li of document.querySelectorAll("li.selected")) {
-                    li.classList.remove("selected");
-                }
-                e.target.classList.add('selected');
-                this.customInputContainer.classList.toggle('show');
-            });
-        });
+    onSearchInputChanged(e) {
+        const searchQuery = e.target.value.toLowerCase();
+        this.ul.innerHTML = '';
+        for (let tag of this.tags) {
+            if (tag.toLowerCase().includes(searchQuery)) {
+                const li = document.createElement("li");
+                const tagName = document.createTextNode(tag);
+                li.appendChild(tagName);
+                this.ul.appendChild(li);
+            }
+        }
     }
 
     updateTags(tags) {
@@ -107,7 +94,7 @@ export class DropdownMenu {
         }
     }
 
-    addTagToSelectedContainer(tag) {
+    addTagToSelectedList(tag) {
         // Créer un nouvel événement personnalisé
         const event = new CustomEvent('tagSelected', { detail: tag });
 
@@ -115,11 +102,12 @@ export class DropdownMenu {
         this.dropdownElement.dispatchEvent(event);
 
         // Appeler addTag sur SearchEngine lorsque l'utilisateur sélectionne un tag
-        this.searchEngine.addTag(tag);
+        // this.searchEngine.addTag(tag);
 
         // Retirer le tag de la liste des tags disponibles
         this.tags = this.tags.filter(t => t !== tag);
         this.updateTags(this.tags);
+        console.log("continuer")
     }
 
     render() {
