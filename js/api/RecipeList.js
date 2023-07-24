@@ -1,7 +1,7 @@
 // * Sert à stocker les résultats de recherche principale et ensuite appliquer des filtres(par tags) supplémentaires directement sur cette liste.
 export class RecipeList {
     constructor(recipes) {
-        this.recipes = recipes || [];
+        this.recipes = recipes || []; //* Tableau ou OBJ ?
     }
 
     addRecipe(recipe) {
@@ -21,8 +21,9 @@ export class RecipeList {
         return Object.entries(this.recipes);
     }
 
-    getUniqueTags(tagType) {
+    getUniqueTags(tagType) { // Récupère les tags et les "fusionnent" en supprimant les doublons
         let tags = [];
+        console.log(this.recipes)
         for (let recipeId in this.recipes) {
             let recipeTags;
             switch(tagType) {
@@ -39,7 +40,9 @@ export class RecipeList {
                     return [];
             }
             tags = [...tags, ...recipeTags];
+            // console.log(tags);
         }
+        console.log(tags);
         return [...new Set(tags)];
     }
 

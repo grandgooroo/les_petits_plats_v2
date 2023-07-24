@@ -50,7 +50,7 @@ export class App {
     }
 
     addTagBtnToSelectedContainer(tag, dropdownMenu) {
-        const selectedTagsContainer = document.getElementById("selected-tags-container");
+        const selectedTagsContainer = document.getElementById("main-index__sort-tags");
         const tagElement = document.createElement("span");
         const tagBtn = document.createElement("div");
         tagElement.textContent = tag;
@@ -75,25 +75,22 @@ export class App {
     }
 
     onTagSelected(tag, tagType, dropdownMenu) {
-        this.searchEngine.addTag(tag);
-        console.log("truc machin")
-        this.displayedRecipes = this.searchEngine.filter();
-        console.table(this.displayedRecipes)
-        const tags = this.displayedRecipes.getUniqueTags(tagType);
-        dropdownMenu.updateTags(tags);
-        this.refreshRecipeDisplay();
-        console.log("tag sélectionné")
+        this.searchEngine.addTag(tag); // Ajoute le tag sélectionné à la liste des tags dans searchEngine
+        this.displayedRecipes = this.searchEngine.filter(); // Filtrer les recettes en fonction des tags sélectionnés
+        console.table(this.displayedRecipes) // Affiche les recettes filtrées
+        const tags = this.displayedRecipes.getUniqueTags(tagType); // Recup les tags uniques de la liste des recettes filtrées
+        console.log('tags before update:', tags);
+        dropdownMenu.updateTags(tags); // Met à jour la liste des tags dans le menu déroulant //* Problème ici
+        this.refreshRecipeDisplay(); // Rafraîchit l'affichage des recettes
     }
 
     onTagDeselected(tag, tagType, dropdownMenu) {
         this.searchEngine.removeTag(tag);
-        console.log(this.searchEngine)
         this.displayedRecipes = this.searchEngine.filter();
-        console.table(this.displayedRecipes)
         const tags = this.displayedRecipes.getUniqueTags(tagType);
         dropdownMenu.updateTags(tags);
+        console.log("tag à jour apres updateTags", tags)
         this.refreshRecipeDisplay();
-        console.log("tag désélectionné")
     }
 
     onInputSearch(event) {

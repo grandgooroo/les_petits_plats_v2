@@ -1,21 +1,17 @@
 export class DropdownMenu {
-    constructor(tags, filterName, dropdownElementSelector, searchEngine) {
+    constructor(tags, filterName, dropdownElementSelector) {
         this.dropdownElement = document.querySelector(dropdownElementSelector);
         this.tags = tags;
         this.filterName = filterName;
-        // this.searchEngine = searchEngine; // Stock la référence à SearchEngine
 
-        console.log('Creating new DropdownMenu with parameters:', {
-            tags,
-            filterName,
-            dropdownElementSelector,
-            searchEngine
-        });
+        // console.log('Creating new DropdownMenu with parameters:', {
+        //     tags,
+        //     filterName,
+        //     dropdownElementSelector,
+        // });
 
         this.render();
 
-        // this.customInput = document.querySelector('.customInput');
-        //* Ajout de "this" pour ne pas récupérer que le premier élément dans le DOM qu'il trouve
         this.customInput = this.dropdownElement.querySelector('.customInput');
         this.selectedData = this.dropdownElement.querySelector('.selectedData');
         this.searchInput = this.dropdownElement.querySelector('.searchInput input');
@@ -35,20 +31,22 @@ export class DropdownMenu {
                         this.dropdownElement.querySelector('.searchInput').classList.remove('focus');
                     }
                 });
-        
+
                 this.customInput.addEventListener('click', () => {
+                    this.clearTags();
+                    this.populateTags();
                     this.customInputContainer.classList.toggle('show');
                 });
-        
-                this.populateTags();
+
                 this.ul.addEventListener('click', this.onClickTagList.bind(this));
     }
-    
+
     onClickTagList(event) {
         if (event.target.tagName === 'LI') {
             let selectedTag = event.target.innerText;
+            console.log("Tag selected: " + selectedTag);
             this.addTagToSelectedList(selectedTag);
-    
+
             for (const li of document.querySelectorAll("li.selected")) {
                 li.classList.remove("selected");
             }
@@ -70,11 +68,33 @@ export class DropdownMenu {
         }
     }
 
+    populateTags() {
+        console.log("Tags to populate: ", this.tags);
+        let tagsLength = this.tags.length;
+        const selectedTags = this.getSelectedTags();
+        for (let i = 0; i < tagsLength; i++) {
+            let tag = this.tags[i];
+            if (selectedTags.includes(tag)) {
+                continue;
+            }
+            const li = document.createElement("li");
+            const tagName = document.createTextNode(tag);
+            li.appendChild(tagName);
+            this.ul.appendChild(li);
+        }
+    }
+
     updateTags(tags) {
-        this.tags = tags;
+        console.log("Tags before update: ", this.tags);
+        const selectedTags = this.getSelectedTags();
+        // Combine les tags selectionnés et les nouveaux tags
+        console.log('New tags:', tags);
+        console.log('Selected tags:', selectedTags);
+        this.tags = [...new Set([...tags, ...selectedTags])];
+        console.log("Tags after update: ", this.tags);
         this.clearTags();
         this.populateTags();
-        console.log(tags)
+        console.log("updateTags is OK")
     }
 
     clearTags() {
@@ -83,15 +103,13 @@ export class DropdownMenu {
         }
     }
 
-    populateTags() {
-        let tagsLength = this.tags.length;
-        for (let i = 0; i < tagsLength; i++) {
-            let tag = this.tags[i];
-            const li = document.createElement("li");
-            const tagName = document.createTextNode(tag);
-            li.appendChild(tagName);
-            this.ul.appendChild(li);
+    getSelectedTags() {
+        const selectedTags = [];
+        for (const selectedTagElement of this.dropdownElement.querySelectorAll('.selected-tags-container')) {
+            selectedTags.push(selectedTagElement.textContent);
         }
+        // console.log("Currently selected tags: ", selectedTags);
+        return selectedTags;
     }
 
     addTagToSelectedList(tag) {
@@ -100,14 +118,6 @@ export class DropdownMenu {
 
         // Lancer l'événement
         this.dropdownElement.dispatchEvent(event);
-
-        // Appeler addTag sur SearchEngine lorsque l'utilisateur sélectionne un tag
-        // this.searchEngine.addTag(tag);
-
-        // Retirer le tag de la liste des tags disponibles
-        this.tags = this.tags.filter(t => t !== tag);
-        this.updateTags(this.tags);
-        console.log("continuer")
     }
 
     render() {
