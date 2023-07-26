@@ -4,11 +4,11 @@ export class DropdownMenu {
         this.tags = tags;
         this.filterName = filterName;
 
-        console.log('Creating new DropdownMenu with parameters:', {
-            tags,
-            filterName,
-            dropdownElementSelector,
-        });
+        // console.log('Creating new DropdownMenu with parameters:', {
+        //     tags,
+        //     filterName,
+        //     dropdownElementSelector,
+        // });
 
         this.render();
 
@@ -96,8 +96,18 @@ export class DropdownMenu {
         }
     }
 
+    removeTagFromSelectedList(tag) {
+        for (let li of this.ul.children) {
+            if (li.textContent === tag && li.style.display === 'none') {
+                li.style.display = 'block';
+                break;
+            }
+        }
+    }
+
 
     updateTags(tags) { //* Met à jour la liste des tags du menu
+        console.log(this.getSelectedTags())
         const selectedTags = this.getSelectedTags();
         // Combine les tags selectionnés et les nouveaux tags
         this.tags = [...new Set([...tags, ...selectedTags])];
@@ -110,7 +120,6 @@ export class DropdownMenu {
         for (const selectedTagElement of document.querySelectorAll('[data-type='+this.filterName+']')) {
             selectedTags.push(selectedTagElement.textContent);
         }
-        console.log(selectedTags)
         return selectedTags;
     }
 

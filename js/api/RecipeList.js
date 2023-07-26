@@ -23,7 +23,7 @@ export class RecipeList {
 
     getUniqueTags(tagType) { // Récupère les tags et les "fusionnent" en supprimant les doublons
         let tags = [];
-        console.log(this.recipes)
+        // console.log(this.recipes)
         for (let recipeId in this.recipes) {
             let recipeTags;
             switch(tagType) {
@@ -42,7 +42,7 @@ export class RecipeList {
             tags = [...tags, ...recipeTags];
             // console.log(tags);
         }
-        console.log([...new Set(tags)]);
+        // console.log([...new Set(tags)]);
         return [...new Set(tags)];
     }
 

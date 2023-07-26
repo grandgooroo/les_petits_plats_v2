@@ -58,6 +58,7 @@ export class App {
         tagElement.classList.add("selected-tags-container");
         selectedTagsContainer.appendChild(tagElement);
         tagBtn.classList.add("close-tags-btn");
+        tagBtn.dataset.tag = tag.tag;
         tagElement.appendChild(tagBtn);
         this.onTagSelected(tag.tag, dropdownMenu.filterName, dropdownMenu);
         // Ajoute un écouteur d'événements au bouton de fermeture des tags
@@ -69,8 +70,10 @@ export class App {
             dropdownMenu.tags.push(tag.tag);
             dropdownMenu.updateTags(dropdownMenu.tags);
             this.onTagDeselected(tag.tag, dropdownMenu.filterName, dropdownMenu);
-            // Appeler removeTag sur SearchEngine lorsque l'utilisateur supprime un tag
-            // this.searchEngine.removeTag(tag);
+            // Récupérez le tag depuis l'attribut de données du bouton
+            const tagToReappear = e.target.dataset.tag;
+            // Faire réapparaître le tag dans la liste des tags disponibles
+            dropdownMenu.removeTagFromSelectedList(tag.tag);
             console.log("tag supprimé du container")
         });
     }
