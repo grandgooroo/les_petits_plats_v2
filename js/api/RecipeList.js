@@ -1,7 +1,7 @@
 // * Sert à stocker les résultats de recherche principale et ensuite appliquer des filtres(par tags) supplémentaires directement sur cette liste.
 export class RecipeList {
     constructor(recipes) {
-        this.recipes = recipes || []; //* Tableau ou OBJ ?
+        this.recipes = recipes || {}; //* Tableau ou OBJ ?
     }
 
     addRecipe(recipe) {
@@ -9,7 +9,7 @@ export class RecipeList {
     }
 
     find(recipeId) {
-        return this.recipes[recipeId]; 
+        return this.recipes[recipeId];
     }
 
     getRecipes() {
@@ -42,7 +42,7 @@ export class RecipeList {
             tags = [...tags, ...recipeTags];
             // console.log(tags);
         }
-        console.log(tags);
+        console.log([...new Set(tags)]);
         return [...new Set(tags)];
     }
 

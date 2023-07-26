@@ -4,11 +4,11 @@ export class DropdownMenu {
         this.tags = tags;
         this.filterName = filterName;
 
-        // console.log('Creating new DropdownMenu with parameters:', {
-        //     tags,
-        //     filterName,
-        //     dropdownElementSelector,
-        // });
+        console.log('Creating new DropdownMenu with parameters:', {
+            tags,
+            filterName,
+            dropdownElementSelector,
+        });
 
         this.render();
 
@@ -33,8 +33,8 @@ export class DropdownMenu {
                 });
 
                 this.customInput.addEventListener('click', () => {
-                    this.clearTags();
-                    this.populateTags();
+                    // this.clearTags();
+                    // this.populateTags();
                     this.customInputContainer.classList.toggle('show');
                 });
 
@@ -82,39 +82,41 @@ export class DropdownMenu {
             li.appendChild(tagName);
             this.ul.appendChild(li);
         }
+        console.log(this.ul)
     }
 
-    updateTags(tags) {
-        console.log("Tags before update: ", this.tags);
+    onClickTagList(event) {
+        if (event.target.tagName === 'LI') {
+            let selectedTag = event.target.innerText;
+            console.log("Tag selected: " + selectedTag);
+            this.addTagToSelectedList(selectedTag);
+            // A lieu d'ajouter la classe 'selected', on cache l'élément
+            event.target.style.display = 'none';
+            this.customInputContainer.classList.toggle('show');
+        }
+    }
+
+
+    updateTags(tags) { //* Met à jour la liste des tags du menu
         const selectedTags = this.getSelectedTags();
         // Combine les tags selectionnés et les nouveaux tags
-        console.log('New tags:', tags);
-        console.log('Selected tags:', selectedTags);
         this.tags = [...new Set([...tags, ...selectedTags])];
-        console.log("Tags after update: ", this.tags);
-        this.clearTags();
         this.populateTags();
-        console.log("updateTags is OK")
-    }
-
-    clearTags() {
-        while (this.ul.firstChild) {
-            this.ul.removeChild(this.ul.firstChild);
-        }
+        console.log(this.tags)
     }
 
     getSelectedTags() {
         const selectedTags = [];
-        for (const selectedTagElement of this.dropdownElement.querySelectorAll('.selected-tags-container')) {
+        for (const selectedTagElement of document.querySelectorAll('[data-type='+this.filterName+']')) {
             selectedTags.push(selectedTagElement.textContent);
         }
-        // console.log("Currently selected tags: ", selectedTags);
+        console.log(selectedTags)
         return selectedTags;
     }
 
     addTagToSelectedList(tag) {
         // Créer un nouvel événement personnalisé
-        const event = new CustomEvent('tagSelected', { detail: tag });
+        const event = new CustomEvent('tagSelected', { detail: {tag: tag, type: this.filterName} });
 
         // Lancer l'événement
         this.dropdownElement.dispatchEvent(event);
@@ -130,7 +132,7 @@ export class DropdownMenu {
                     <div class="options">
                         <div class="searchInput">
                             <i class="fa-solid fa-magnifying-glass"></i>
-                            <input type="text" id="searchInput" placeholder="Search"> <!-- //* Cible eventListener -->
+                            <input type="text" id="searchInput" placeholder="Search">
                         </div>
                         <ul>
                         </ul>

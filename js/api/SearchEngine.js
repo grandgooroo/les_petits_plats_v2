@@ -33,14 +33,14 @@ export class SearchEngine
     }
 
     //* Function pour stocker les tags dans le tableau puis filtre et met à jours les recettes
-    addTag(tag) {
+    addTag(tag) { // Ajouter le tag du tableau de recherche
         this.selectedTags.push(tag);
         this.filter();
         console.log("tag ajouté: ", tag);
         console.log("tags actuellement sélectionnés: ", this.selectedTags);
     }
 
-    removeTag(tag) {
+    removeTag(tag) { // Supprimer le tag du tableau de recherche
         const index = this.selectedTags.indexOf(tag);
         if (index > -1) {
             this.selectedTags.splice(index, 1);

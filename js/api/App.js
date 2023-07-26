@@ -53,21 +53,22 @@ export class App {
         const selectedTagsContainer = document.getElementById("main-index__sort-tags");
         const tagElement = document.createElement("span");
         const tagBtn = document.createElement("div");
-        tagElement.textContent = tag;
+        tagElement.dataset.type = tag.type;
+        tagElement.textContent = tag.tag;
         tagElement.classList.add("selected-tags-container");
         selectedTagsContainer.appendChild(tagElement);
         tagBtn.classList.add("close-tags-btn");
         tagElement.appendChild(tagBtn);
-        this.onTagSelected(tag, dropdownMenu.filterName, dropdownMenu);
+        this.onTagSelected(tag.tag, dropdownMenu.filterName, dropdownMenu);
         // Ajoute un écouteur d'événements au bouton de fermeture des tags
         tagBtn.addEventListener('click', (e) => {
             e.stopPropagation(); // Empêche l'événement 'click' de se propager aux éléments parents
             selectedTagsContainer.removeChild(tagElement); // Supprime le tag de la liste des tags sélectionnés
 
             // Ajouter le tag à la liste des tags disponibles
-            dropdownMenu.tags.push(tag);
+            dropdownMenu.tags.push(tag.tag);
             dropdownMenu.updateTags(dropdownMenu.tags);
-            this.onTagDeselected(tag, dropdownMenu.filterName, dropdownMenu);
+            this.onTagDeselected(tag.tag, dropdownMenu.filterName, dropdownMenu);
             // Appeler removeTag sur SearchEngine lorsque l'utilisateur supprime un tag
             // this.searchEngine.removeTag(tag);
             console.log("tag supprimé du container")
